@@ -1,46 +1,215 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>🌍 Home | MatjSMP</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>🌍 MatjSMP — Servidor Minecraft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --accent: #22c55e;
+      --accent-dark: #16a34a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #1e293b, var(--bg));
+      color: var(--text);
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 4rem 1rem 3rem;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: .5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .ip-box {
+      margin-top: 1.5rem;
+      display: inline-flex;
+      gap: .5rem;
+      align-items: center;
+      background: var(--card);
+      padding: .75rem 1rem;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .ip-box strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .ip-box button {
+      border: none;
+      border-radius: 999px;
+      padding: .4rem .9rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #022c22;
+      font-weight: 700;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    section {
+      background: rgba(17,24,39,.85);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,.35);
+      text-align: left;
+    }
+
+    section h2 {
+      margin-top: 0;
+      margin-bottom: .75rem;
+      color: var(--accent);
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    ul li {
+      margin-bottom: .4rem;
+    }
+
+    footer {
+      background: #020617;
+      color: var(--muted);
+      padding: 1rem;
+      font-size: .9rem;
+    }
+
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .75rem;
+      background: rgba(34,197,94,.15);
+      color: var(--accent);
+      padding: .25rem .6rem;
+      border-radius: 999px;
+      margin-bottom: .5rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      section { text-align: center; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>🌍 Bem-vindo ao MatjSMP!</h1>
-        <p>IP: <strong>matjsmp.aternos.me</strong></p>
-        <button onclick="alert('Copiado!'); navigator.clipboard.writeText('matjsmp.aternos.me')">Copiar IP</button>
-    </header>
 
-    <main>
-        <section id="regras">
-            <h2>📜 Regras</h2>
-            <ul>
-                <li>Não trapacear</li>
-                <li>Respeitar outros jogadores</li>
-                <li>Não usar texturas que dão vantagem</li>
-            </ul>
-        </section>
+  <header>
+    <h1>🌍 MatjSMP</h1>
+    <p>Servidor Survival • Comunidade • Eventos</p>
 
-        <section id="mods">
-            <h2>🛠 Mods e Plugins</h2>
-            <p>Nosso servidor utiliza plugins famosos, mas eles são secretos...</p>
-        </section>
+    <div class="ip-box">
+      <span>IP:</span>
+      <strong id="ip">matjsmp.aternos.me</strong>
+      <button onclick="copyIP()">Copiar</button>
+    </div>
+  </header>
 
-        <section id="noticias">
-            <h2>📰 Últimas Notícias</h2>
-            <p>Lobby de eventos está pronto!</p>
-        </section>
-    </main>
+  <main>
+    <section>
+      <span class="badge">📜 Importante</span>
+      <h2>Regras</h2>
+      <ul>
+        <li>Sem trapaças ou hacks</li>
+        <li>Respeite todos os jogadores</li>
+        <li>Texturas que dão vantagem são proibidas</li>
+      </ul>
+    </section>
 
-    <div id="particles"></div>
+    <section>
+      <span class="badge">🛠 Sistema</span>
+      <h2>Plugins & Mods</h2>
+      <p>Utilizamos plugins de proteção, economia e eventos para garantir diversão e segurança.</p>
+    </section>
 
-    <footer>
-        <p>© 2025 MatjSMP | Contato: matjsmp@gmail.com</p>
-    </footer>
+    <section>
+      <span class="badge">📰 Atualizações</span>
+      <h2>Notícias</h2>
+      <p>✅ Lobby de eventos finalizado<br>🎉 Novos eventos em breve</p>
+    </section>
+  </main>
 
-    <script src="script.js"></script>
+  <div id="particles"></div>
+
+  <footer>
+    © 2025 MatjSMP • Contato: matjsmp@gmail.com
+  </footer>
+
+  <script>
+    function copyIP() {
+      navigator.clipboard.writeText('matjsmp.aternos.me');
+      alert('IP copiado com sucesso!');
+    }
+
+    function createBlock() {
+      const block = document.createElement('div');
+      const size = Math.random() * 10 + 8;
+      block.style.position = 'fixed';
+      block.style.width = size + 'px';
+      block.style.height = size + 'px';
+      block.style.background = '#22c55e';
+      block.style.left = Math.random() * window.innerWidth + 'px';
+      block.style.top = '-20px';
+      block.style.opacity = Math.random() * 0.6 + 0.2;
+      block.style.borderRadius = '4px';
+      document.getElementById('particles').appendChild(block);
+
+      let top = -20;
+      const speed = Math.random() * 2 + 2;
+
+      const fall = setInterval(() => {
+        top += speed;
+        block.style.top = top + 'px';
+        if (top > window.innerHeight) {
+          block.remove();
+          clearInterval(fall);
+        }
+      }, 20);
+    }
+
+    setInterval(createBlock, 120);
+  </script>
 </body>
 </html>
-
-
