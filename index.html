@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>MatjSMP — Oficial</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🌍 MatjSMP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -28,8 +28,8 @@ body{
 
 nav{
   display:flex;
-  gap:1rem;
   justify-content:center;
+  gap:1rem;
   padding:1rem;
   background:#020617;
 }
@@ -37,54 +37,65 @@ nav{
 nav button{
   background:none;
   border:none;
-  color:var(--text);
+  color:var(--muted);
   font-weight:600;
   cursor:pointer;
 }
+nav button.active{color:var(--accent)}
 
-nav button:hover{color:var(--accent)}
-
-.page{display:none;padding:2rem;max-width:1100px;margin:auto}
+.page{display:none}
 .page.active{display:block}
 
-.grid{
+.container{
+  max-width:1100px;
+  margin:2rem auto;
+  padding:0 1rem;
+}
+
+.cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:1.5rem;
 }
 
 .card{
-  background:rgba(17,24,39,.9);
-  padding:1.5rem;
+  background:var(--card);
   border-radius:20px;
+  padding:1.5rem;
   box-shadow:0 20px 40px rgba(0,0,0,.35);
-  text-align:center;
 }
 
+h1,h2{color:var(--accent)}
 .badge{
-  display:inline-block;
   background:rgba(34,197,94,.15);
   color:var(--accent);
-  padding:.25rem .6rem;
-  border-radius:999px;
   font-size:.75rem;
-  font-weight:600;
+  padding:.3rem .7rem;
+  border-radius:999px;
+  display:inline-block;
 }
 
-.btn{
+button.primary{
   background:linear-gradient(135deg,var(--accent),var(--accent-dark));
   border:none;
   padding:.6rem 1rem;
-  border-radius:999px;
+  border-radius:10px;
   font-weight:700;
   cursor:pointer;
-  margin-top:.5rem;
 }
 
-.btn.disabled{
+button.disabled{
   background:#374151;
   cursor:not-allowed;
 }
+
+.ip-box{
+  display:flex;
+  justify-content:center;
+  gap:.5rem;
+  margin-top:1rem;
+}
+.ip-box strong{color:var(--accent)}
 
 input{
   width:100%;
@@ -92,13 +103,21 @@ input{
   border-radius:10px;
   border:none;
   background:#020617;
-  color:white;
+  color:var(--text);
+}
+
+.product{
+  text-align:center;
+}
+.product img{
+  width:80px;
+  margin-bottom:.5rem;
 }
 
 .cart-item{
   display:flex;
   justify-content:space-between;
-  margin-bottom:.5rem;
+  margin:.5rem 0;
 }
 
 .alert{
@@ -106,6 +125,7 @@ input{
   padding:1rem;
   border-radius:12px;
   margin-top:1rem;
+  display:none;
 }
 </style>
 </head>
@@ -113,146 +133,155 @@ input{
 <body>
 
 <nav>
-  <button onclick="show('home')">🏠 Home</button>
-  <button onclick="show('shop')">🛒 Loja</button>
-  <button onclick="show('cart')">🧺 Carrinho</button>
-  <button onclick="show('forum')">💬 Fórum</button>
-  <button onclick="show('login')">🔐 Login</button>
+  <button onclick="showPage('home')" class="active">Home</button>
+  <button onclick="showPage('shop')">Loja</button>
+  <button onclick="showPage('cart')">Carrinho 🛒</button>
+  <button onclick="showPage('forum')">Fórum 💬</button>
 </nav>
 
 <!-- HOME -->
-<section id="home" class="page active">
-  <div class="grid">
-    <div class="card">
-      <span class="badge">🌍 Servidor</span>
-      <h2>IP do Servidor</h2>
-      <p><strong id="ip">matjsmp.jogar.io</strong></p>
-      <button class="btn" onclick="copyIP()">Copiar IP</button>
+<div id="home" class="page active">
+  <div class="container">
+    <h1>🌍 MatjSMP</h1>
+    <p>Servidor Survival • Comunidade • Eventos</p>
+
+    <div class="ip-box">
+      <span>IP:</span>
+      <strong id="ip">matjsmp.jogar.io</strong>
+      <button class="primary" onclick="copyIP()">Copiar</button>
     </div>
 
-    <div class="card">
-      <span class="badge">📰 Notícias</span>
-      <h3>Nova host paga</h3>
-      <p>Servidor mais estável e rápido.</p>
-    </div>
+    <div class="cards" style="margin-top:2rem">
+      <div class="card">
+        <span class="badge">📰 Notícias</span>
+        <h2>Atualizações</h2>
+        <p>✅ Nova host paga<br>🎉 Novo IP</p>
+      </div>
 
-    <div class="card">
-      <span class="badge">🎉 Evento</span>
-      <h3>Evento Survival</h3>
-      <p>Premiações exclusivas!</p>
+      <div class="card">
+        <span class="badge">📜 Regras</span>
+        <ul>
+          <li>Sem hacks</li>
+          <li>Respeito acima de tudo</li>
+          <li>Texturas apelonas proibidas</li>
+        </ul>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- LOJA -->
-<section id="shop" class="page">
-  <h1>🛒 Loja Oficial</h1>
-  <div class="grid">
-    <div class="card">
-      <h3>Beta</h3>
-      <p>R$ 10</p>
-      <button class="btn" onclick="add(this,'Beta')">Adicionar</button>
-    </div>
-    <div class="card">
-      <h3>Diamante</h3>
-      <p>R$ 25</p>
-      <button class="btn" onclick="add(this,'Diamante')">Adicionar</button>
-    </div>
-    <div class="card">
-      <h3>VIP</h3>
-      <p>R$ 40</p>
-      <button class="btn" onclick="add(this,'VIP')">Adicionar</button>
-    </div>
-    <div class="card">
-      <h3>MATJ</h3>
-      <p>R$ 60</p>
-      <button class="btn" onclick="add(this,'MATJ')">Adicionar</button>
+<div id="shop" class="page">
+  <div class="container">
+    <h1>🛒 Loja</h1>
+
+    <div class="cards">
+      <div class="card product">
+        <img src="https://textures.minecraft.net/texture/df3c2e2b" />
+        <h3>VIP</h3>
+        <p>R$ 10,00</p>
+        <button class="primary" onclick="addItem(this,'VIP',10)">Adicionar</button>
+      </div>
+
+      <div class="card product">
+        <img src="https://textures.minecraft.net/texture/5c8a58" />
+        <h3>Diamante</h3>
+        <p>R$ 20,00</p>
+        <button class="primary" onclick="addItem(this,'Diamante',20)">Adicionar</button>
+      </div>
+
+      <div class="card product">
+        <img src="https://textures.minecraft.net/texture/4a1c94" />
+        <h3>Beta</h3>
+        <p>R$ 30,00</p>
+        <button class="primary" onclick="addItem(this,'Beta',30)">Adicionar</button>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- CARRINHO -->
-<section id="cart" class="page">
-  <h1>🧺 Carrinho</h1>
+<div id="cart" class="page">
+  <div class="container">
+    <h1>🧺 Carrinho</h1>
 
-  <input placeholder="Nick do Minecraft" oninput="updateSkin(this.value)">
-  <img id="skin" style="margin-top:1rem" width="100">
+    <label>Nick Minecraft</label>
+    <input id="nick" placeholder="Seu nick">
+    <img id="skin" style="margin-top:1rem;width:100px">
 
-  <div id="cartList"></div>
-  <p id="total"></p>
+    <div id="cartItems"></div>
+    <h3>Total: R$ <span id="total">0</span></h3>
 
-  <button class="btn" onclick="pay()">Prosseguir com pagamento</button>
-  <div id="alert"></div>
-</section>
+    <button class="primary" onclick="pay()">Prosseguir com pagamento</button>
 
-<!-- FÓRUM -->
-<section id="forum" class="page">
-  <h1>💬 Fórum</h1>
-  <input placeholder="Buscar tópico...">
-
-  <div class="card">
-    <span class="badge">Sugestão</span>
-    <h3>Adicionar eventos semanais</h3>
-    <p>Autor: Matj</p>
+    <div id="alert" class="alert">
+      ⚠️ Pagamentos em manutenção.<br><br>
+      <button class="primary" onclick="closeAlert()">Ok</button>
+    </div>
   </div>
+</div>
 
-  <div class="card">
-    <span class="badge">Ajuda</span>
-    <h3>Erro ao logar</h3>
-    <p>Autor: Player123</p>
-  </div>
-</section>
+<!-- FORUM -->
+<div id="forum" class="page">
+  <div class="container">
+    <h1>💬 Fórum MatjSMP</h1>
 
-<!-- LOGIN -->
-<section id="login" class="page">
-  <h1>🔐 Login</h1>
-  <div class="card">
-    <input placeholder="Usuário">
-    <input type="password" placeholder="Senha" style="margin-top:.5rem">
-    <button class="btn" style="width:100%">Entrar</button>
+    <script src="https://giscus.app/client.js"
+      data-repo="matjedo/matjsmp"
+      data-repo-id="R_kgDOQirc6Q"
+      data-category="General"
+      data-category-id="DIC_kwDOQirc6c4C1dEB"
+      data-mapping="pathname"
+      data-lang="pt"
+      crossorigin="anonymous"
+      async>
+    </script>
   </div>
-</section>
+</div>
 
 <script>
-const prices={Beta:10,Diamante:25,VIP:40,MATJ:60};
-let cart={};
-
-function show(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+let cart=[]
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'))
+  event.target.classList.add('active')
 }
 
 function copyIP(){
-  navigator.clipboard.writeText('matjsmp.jogar.io');
-  alert('IP copiado!');
+  navigator.clipboard.writeText('matjsmp.jogar.io')
+  alert('IP copiado!')
 }
 
-function add(btn,item){
-  cart[item]=(cart[item]||0)+1;
-  btn.classList.add('disabled');
-  btn.disabled=true;
-  render();
+function addItem(btn,name,price){
+  cart.push({name,price})
+  btn.classList.add('disabled')
+  btn.innerText='Adicionado'
+  btn.onclick=null
+  renderCart()
 }
 
-function render(){
-  let total=0;
-  const list=document.getElementById('cartList');
-  list.innerHTML='';
-  for(let i in cart){
-    let p=prices[i]*cart[i];
-    total+=p;
-    list.innerHTML+=`<div class="cart-item"><span>${i} x${cart[i]}</span><strong>R$ ${p}</strong></div>`;
-  }
-  document.getElementById('total').innerText='Total: R$ '+total;
+function renderCart(){
+  const div=document.getElementById('cartItems')
+  div.innerHTML=''
+  let total=0
+  cart.forEach(i=>{
+    total+=i.price
+    div.innerHTML+=`<div class="cart-item"><span>${i.name}</span><span>R$ ${i.price}</span></div>`
+  })
+  document.getElementById('total').innerText=total
 }
+
+document.getElementById('nick').addEventListener('input',e=>{
+  document.getElementById('skin').src=
+    `https://mc-heads.net/avatar/${e.target.value}/100`
+})
 
 function pay(){
-  document.getElementById('alert').innerHTML=
-  '<div class="alert">🚧 Sistema em manutenção.<br><button class="btn" onclick="this.parentElement.remove()">Ok</button></div>';
+  document.getElementById('alert').style.display='block'
 }
-
-function updateSkin(nick){
-  document.getElementById('skin').src=`https://minotar.net/armor/bust/${nick}/100`;
+function closeAlert(){
+  document.getElementById('alert').style.display='none'
 }
 </script>
 
