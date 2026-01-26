@@ -1,289 +1,223 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>🌍 MatjSMP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>🌍 MatjSMP — Servidor Minecraft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --bg:#0f172a;
-  --card:#111827;
-  --accent:#22c55e;
-  --accent-dark:#16a34a;
-  --text:#e5e7eb;
-  --muted:#9ca3af;
-  --danger:#7f1d1d;
-}
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --accent: #22c55e;
+      --accent-dark: #16a34a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --btn-hover: #16a34a;
+    }
 
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Inter,system-ui;
-  background:radial-gradient(circle at top,#1e293b,var(--bg));
-  color:var(--text);
-}
+    * { box-sizing: border-box; }
 
-nav{
-  display:flex;
-  justify-content:center;
-  gap:1rem;
-  padding:1rem;
-  background:#020617;
-}
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #1e293b, var(--bg));
+      color: var(--text);
+      text-align: center;
+    }
 
-nav button{
-  background:none;
-  border:none;
-  color:var(--muted);
-  font-weight:600;
-  cursor:pointer;
-}
-nav button.active{color:var(--accent)}
+    header {
+      padding: 2rem 1rem;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
 
-.page{display:none}
-.page.active{display:block}
+    header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0;
+      color: var(--accent);
+    }
 
-.container{
-  max-width:1100px;
-  margin:2rem auto;
-  padding:0 1rem;
-}
+    header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:1.5rem;
-}
+    nav {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
 
-.card{
-  background:var(--card);
-  border-radius:20px;
-  padding:1.5rem;
-  box-shadow:0 20px 40px rgba(0,0,0,.35);
-}
+    nav a {
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      color: var(--text);
+      background: linear-gradient(135deg, #1f2937, #111827);
+      transition: all 0.3s ease;
+    }
 
-h1,h2{color:var(--accent)}
-.badge{
-  background:rgba(34,197,94,.15);
-  color:var(--accent);
-  font-size:.75rem;
-  padding:.3rem .7rem;
-  border-radius:999px;
-  display:inline-block;
-}
+    nav a:hover {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #022c22;
+      transform: scale(1.05);
+    }
 
-button.primary{
-  background:linear-gradient(135deg,var(--accent),var(--accent-dark));
-  border:none;
-  padding:.6rem 1rem;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-}
+    .ip-box {
+      margin-top: 1rem;
+      display: inline-flex;
+      gap: .5rem;
+      align-items: center;
+      background: var(--card);
+      padding: .75rem 1rem;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
 
-button.disabled{
-  background:#374151;
-  cursor:not-allowed;
-}
+    .ip-box strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
 
-.ip-box{
-  display:flex;
-  justify-content:center;
-  gap:.5rem;
-  margin-top:1rem;
-}
-.ip-box strong{color:var(--accent)}
+    .ip-box button {
+      border: none;
+      border-radius: 999px;
+      padding: .4rem .9rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #022c22;
+      font-weight: 700;
+    }
 
-input{
-  width:100%;
-  padding:.6rem;
-  border-radius:10px;
-  border:none;
-  background:#020617;
-  color:var(--text);
-}
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
 
-.product{
-  text-align:center;
-}
-.product img{
-  width:80px;
-  margin-bottom:.5rem;
-}
+    section {
+      background: rgba(17,24,39,.85);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,.35);
+      text-align: left;
+    }
 
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  margin:.5rem 0;
-}
+    section h2 {
+      margin-top: 0;
+      margin-bottom: .75rem;
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
 
-.alert{
-  background:var(--danger);
-  padding:1rem;
-  border-radius:12px;
-  margin-top:1rem;
-  display:none;
-}
-</style>
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    ul li {
+      margin-bottom: .4rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .75rem;
+      background: rgba(34,197,94,.15);
+      color: var(--accent);
+      padding: .25rem .6rem;
+      border-radius: 999px;
+      margin-bottom: .5rem;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #020617;
+      color: var(--muted);
+      padding: 1rem;
+      font-size: .9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      section { text-align: center; }
+      nav { flex-direction: column; }
+    }
+  </style>
 </head>
-
 <body>
 
-<nav>
-  <button onclick="showPage('home')" class="active">Home</button>
-  <button onclick="showPage('shop')">Loja</button>
-  <button onclick="showPage('cart')">Carrinho 🛒</button>
-  <button onclick="showPage('forum')">Fórum 💬</button>
-</nav>
-
-<!-- HOME -->
-<div id="home" class="page active">
-  <div class="container">
+  <header>
     <h1>🌍 MatjSMP</h1>
     <p>Servidor Survival • Comunidade • Eventos</p>
+
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="loja.html">🛒 Loja</a>
+      <a href="forum.html">💬 Fórum</a>
+    </nav>
 
     <div class="ip-box">
       <span>IP:</span>
       <strong id="ip">matjsmp.jogar.io</strong>
-      <button class="primary" onclick="copyIP()">Copiar</button>
+      <button onclick="copyIP()">Copiar</button>
     </div>
+  </header>
 
-    <div class="cards" style="margin-top:2rem">
-      <div class="card">
-        <span class="badge">📰 Notícias</span>
-        <h2>Atualizações</h2>
-        <p>✅ Nova host paga<br>🎉 Novo IP</p>
-      </div>
+  <main>
+    <section>
+      <span class="badge">📜 Importante</span>
+      <h2>Regras</h2>
+      <ul>
+        <li>Sem trapaças ou hacks</li>
+        <li>Respeite todos os jogadores</li>
+        <li>Texturas que dão vantagem são proibidas</li>
+      </ul>
+    </section>
 
-      <div class="card">
-        <span class="badge">📜 Regras</span>
-        <ul>
-          <li>Sem hacks</li>
-          <li>Respeito acima de tudo</li>
-          <li>Texturas apelonas proibidas</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+    <section>
+      <span class="badge">✨ Diferenciais</span>
+      <h2>Features do Servidor</h2>
+      <ul>
+        <li><strong>Economia ativa</strong> — Sistema de mercado com <code>/mercado</code>.</li>
+        <li><strong>Eventos frequentes</strong> — Participe de mini-games e desafios.</li>
+        <li><strong>Multiplayer de verdade</strong> — Jogue com outros players.</li>
+        <li><strong>Staff ativa</strong> — Ajuda sempre que necessário.</li>
+        <li><strong>Atualizações constantes</strong> — Novidades regulares.</li>
+      </ul>
+    </section>
 
-<!-- LOJA -->
-<div id="shop" class="page">
-  <div class="container">
-    <h1>🛒 Loja</h1>
+    <section>
+      <span class="badge">📰 Notícias</span>
+      <h2>Últimas Atualizações</h2>
+      <p>✅ Nova host paga<br>🎉 Novo IP ativo: matjsmp.jogar.io</p>
+    </section>
+  </main>
 
-    <div class="cards">
-      <div class="card product">
-        <img src="https://textures.minecraft.net/texture/df3c2e2b" />
-        <h3>VIP</h3>
-        <p>R$ 10,00</p>
-        <button class="primary" onclick="addItem(this,'VIP',10)">Adicionar</button>
-      </div>
+  <footer>
+    2026 MatjSMP • Contato: matjsmp@gmail.com
+  </footer>
 
-      <div class="card product">
-        <img src="https://textures.minecraft.net/texture/5c8a58" />
-        <h3>Diamante</h3>
-        <p>R$ 20,00</p>
-        <button class="primary" onclick="addItem(this,'Diamante',20)">Adicionar</button>
-      </div>
-
-      <div class="card product">
-        <img src="https://textures.minecraft.net/texture/4a1c94" />
-        <h3>Beta</h3>
-        <p>R$ 30,00</p>
-        <button class="primary" onclick="addItem(this,'Beta',30)">Adicionar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CARRINHO -->
-<div id="cart" class="page">
-  <div class="container">
-    <h1>🧺 Carrinho</h1>
-
-    <label>Nick Minecraft</label>
-    <input id="nick" placeholder="Seu nick">
-    <img id="skin" style="margin-top:1rem;width:100px">
-
-    <div id="cartItems"></div>
-    <h3>Total: R$ <span id="total">0</span></h3>
-
-    <button class="primary" onclick="pay()">Prosseguir com pagamento</button>
-
-    <div id="alert" class="alert">
-      ⚠️ Pagamentos em manutenção.<br><br>
-      <button class="primary" onclick="closeAlert()">Ok</button>
-    </div>
-  </div>
-</div>
-
-<!-- FORUM -->
-<div id="forum" class="page">
-  <div class="container">
-    <h1>💬 Fórum MatjSMP</h1>
-
-    <script src="https://giscus.app/client.js"
-      data-repo="matjedo/matjsmp"
-      data-repo-id="R_kgDOQirc6Q"
-      data-category="General"
-      data-category-id="DIC_kwDOQirc6c4C1dEB"
-      data-mapping="pathname"
-      data-lang="pt"
-      crossorigin="anonymous"
-      async>
-    </script>
-  </div>
-</div>
-
-<script>
-let cart=[]
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-  document.getElementById(id).classList.add('active')
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'))
-  event.target.classList.add('active')
-}
-
-function copyIP(){
-  navigator.clipboard.writeText('matjsmp.jogar.io')
-  alert('IP copiado!')
-}
-
-function addItem(btn,name,price){
-  cart.push({name,price})
-  btn.classList.add('disabled')
-  btn.innerText='Adicionado'
-  btn.onclick=null
-  renderCart()
-}
-
-function renderCart(){
-  const div=document.getElementById('cartItems')
-  div.innerHTML=''
-  let total=0
-  cart.forEach(i=>{
-    total+=i.price
-    div.innerHTML+=`<div class="cart-item"><span>${i.name}</span><span>R$ ${i.price}</span></div>`
-  })
-  document.getElementById('total').innerText=total
-}
-
-document.getElementById('nick').addEventListener('input',e=>{
-  document.getElementById('skin').src=
-    `https://mc-heads.net/avatar/${e.target.value}/100`
-})
-
-function pay(){
-  document.getElementById('alert').style.display='block'
-}
-function closeAlert(){
-  document.getElementById('alert').style.display='none'
-}
-</script>
+  <script>
+    function copyIP() {
+      navigator.clipboard.writeText('matjsmp.jogar.io');
+      alert('IP copiado com sucesso!');
+    }
+  </script>
 
 </body>
 </html>
